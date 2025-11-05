@@ -1,0 +1,16 @@
+[Unit]
+Description=WHOIS API (gunicorn)
+After=network.target
+
+[Service]
+User=whoisapi
+Group=whoisapi
+WorkingDirectory=/opt/whois-api
+Environment="PATH=/opt/whois-api/venv/bin"
+ExecStart=/opt/whois-api/venv/bin/gunicorn --workers 3 --bind 0.0.0.0:8080 whois_api:app
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target
